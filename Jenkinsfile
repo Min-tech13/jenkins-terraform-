@@ -29,12 +29,12 @@ pipeline{
     id 'envId'
     ok 'Submit'
     parameters {
-        choice choices: ['Yes'], name: 'destroy'
+        choice choices: ['no', 'yes', 'min', 'destroy'], name: 'destroy'
     }
     }
     steps {
         withCredentials([aws(accessKeyVariable:'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVarible: 'AWS_SECRET_ACCESS_KEY')]) {
-        sh 'terraform destroy -auto-approve '
+         sh 'terraform ${destroy} -auto-approve '
         }
     }
     }
