@@ -10,7 +10,7 @@ pipeline{
     }
     stage('plan') {
     steps {
-        sh 'terraform plan terraform/'
+        sh 'terraform plan '
     }
     }
     stage('awscredetials') {
