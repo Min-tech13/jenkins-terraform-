@@ -25,7 +25,7 @@ pipeline{
     }
     stage('terraform destroy') {
     input {
-    message 'Please select environment'
+    message 'Are you sure to destroy all app'
     id 'envId'
     ok 'Submit'
     submitterParameter 'approverId'
