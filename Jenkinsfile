@@ -29,7 +29,7 @@ pipeline{
     id 'envId'
     ok 'Submit'
     parameters {
-        choice choices: ['no', 'yes', 'min', 'destroy'], name: 'destroy'
+        choice choices: ['no', 'yes', 'minnn', 'destroy'], name: 'destroy'
     }
     }
     steps {
