@@ -10,13 +10,13 @@ pipeline{
     }
     stage('plan') {
     steps {
-        sh 'terraform plan main.tf'
+        sh 'terraform plan terraform/'
     }
     }
     stage('awscredetials') {
     steps {
         withCredentials([aws(accessKeyVariable:'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVarible: 'AWS_SECRET_ACCESS_KEY')]) {
-        sh 'terraform apply -auto-approve main.tf '
+        sh 'terraform apply -auto-approve terraform/ '
         }
     }
     }
