@@ -17,12 +17,22 @@ pipeline{
     }
     stage('terraform apply') {
     steps {
-        withCredentials([aws(accessKeyVariable:'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVarible: 'AWS_SECRET_ACCESS_KEY')]) {
-        sh 'terraform apply -auto-approve '
+        
+        s([aws(accessKeyVariable:'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVarible: 'AWS_SECRET_ACCESS_KEY')]) {
+        sh 'kubectl apply  -auto-approve '
         }
     }
     }
     stage('terraform destroy') {
+    input {
+    message 'Please select environment'
+    id 'envId'
+    ok 'Submit'
+    submitterParameter 'approverId'
+    parameters {
+        choice choices: ['Prod', 'Pre-Prod'], name: 'envType'
+    }
+    }
     steps {
         withCredentials([aws(accessKeyVariable:'AWS_ACCESS_KEY_ID', credentialsId: 'aws', secretKeyVarible: 'AWS_SECRET_ACCESS_KEY')]) {
         sh 'terraform destroy -auto-approve '
