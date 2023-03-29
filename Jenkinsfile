@@ -29,7 +29,7 @@ pipeline{
     id 'envId'
     ok 'Submit'
     parameters {
-        choice choices: ['Yes'], 
+        choice choices: ['Yes']
     }
     }
     steps {
