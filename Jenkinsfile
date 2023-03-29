@@ -28,9 +28,8 @@ pipeline{
     message 'Are you sure to destroy all app'
     id 'envId'
     ok 'Submit'
-    submitterParameter 'approverId'
     parameters {
-        choice choices: ['Yes', 'No'], name: 'envType'
+        choice choices: ['Yes'], 
     }
     }
     steps {
