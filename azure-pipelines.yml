@@ -1,19 +1,38 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: 'ubuntu-latest'
+
+variables:
+  # AWS access keys
+  aws_access_key: '<YOUR_AWS_ACCESS_KEY>'
+  aws_secret_key: '<YOUR_AWS_SECRET_KEY>'
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '3.x'
+    architecture: 'x64'
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    # Install AWS CLI
+    sudo apt-get update
+    sudo apt-get install -y python3-pip
+    pip3 install awscli
+
+  displayName: 'Install AWS CLI'
+
+- script: |
+    # Configure AWS CLI with access keys
+    aws configure set aws_access_key_id $(aws_access_key)
+    aws configure set aws_secret_access_key $(aws_secret_key)
+    aws configure set default.region us-west-2
+
+  displayName: 'Configure AWS CLI'
+
+- script: |
+    # Run AWS CLI command to deploy resources
+    aws s3 cp my-bucket.txt s3://my-bucket/
+
+  displayName: 'Deploy to AWS'
